@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Metaheurístico</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+  <div class="nav-container">
+        
+        <div class="nav-group">
+        <button class="nav-category-btn" onclick="mostrar('metricas')">Métricas</button>
+        <div class="nav-items-wrapper">
+                <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Mejor Fitness</button>
+                <button class="nav-item" onclick="mostrar('sec-tiempo', 'Métrica: Tiempo')">Tiempo de Ejecución</button>
+                <button class="nav-item" onclick="mostrar('sec-tiempo', 'Métrica: Tiempo')">Tiempo de Ejecución</button>
+            </div>
+        </div>
+        <div class="nav-group">
+        <button class="nav-category-btn"onclick="mostrar('convergencia')">Convergencia</button>
+         <div class="nav-items-wrapper">
+         <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Proceso de optimización</button>
+         </div>
+        </div>
+        <div class="nav-group">  
+        <button class="nav-category-btn" onclick="mostrar('comparacion')">Comparación</button>
+                 <div class="nav-items-wrapper">
+         <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Mejora de rendimiento</button>
+         </div>
+        </div>
+        <div class="nav-group">
+        <button class="nav-category-btn"onclick="mostrar('ruta')">Ruta</button>
+                 <div class="nav-items-wrapper">
+         <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Configuracion de ruta final</button>
+         </div>
+        </div>
+    </aside>
+<div class="main-wrapper">
+   <div class="header">
+        <h1>Algoritmo Híbrido GA + SA</h1>
+        </div>
+
+    <!-- CONTENIDO -->
+    <main class="contenido">
+        <!-- METRICAS -->
+<section id="vista-general" class="seccion activa">
+    
+    <div class="graficas-container">
+        <div class="chart-card">
+            <span class="etiquetas">Mejor Fitness</span>
+            <h3 id="fitnessValor">0.00</h3>
+            <canvas id="fitnessChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <span class="etiquetas">Tiempo de Ejecución</span>
+            <h3 id="tiempoValor">0.00</h3>
+            <canvas id="tiempoChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <span class="etiquetas">Desviación Estándar</span>
+            <h3 id="desviacionValor">0.00</h3>
+            <canvas id="desviacionChart"></canvas>
+        </div>
+    </div>
+</section>
+
+        </section>
+
+
+      <div class="analisis-grid">
+                <div id="card-convergencia" class="analisis-card">
+                    <p class="etiquetas">Proceso de Optimización</p>
+                    <img src="{{ url_for('static', filename='graficas/convergencia.png') }}" class="img-fluid">
+                </div>
+                <div id="card-comparacion" class="analisis-card">
+                    <p class="etiquetas">Mejora de Rendimiento</p>
+                    <img src="{{ url_for('static', filename='graficas/comparacion.png') }}" class="img-fluid">
+                </div>
+                <div id="card-ruta" class="analisis-card">
+                    <p class="etiquetas">Configuración de Ruta Final</p>
+                    <img src="{{ url_for('static', filename='graficas/ruta.png') }}" class="img-fluid">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+<script>
+
+
+window.resultados = {
+    fitness: Number("{{ resultados.fitness }}"),
+    tiempo: Number("{{ resultados.tiempo }}"),
+    desviacion: Number("{{ resultados.desviacion }}")
+};
+</script>
+
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+
+</body>
+</html>
