@@ -2,73 +2,78 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Metaheurístico</title>
+    <title>Algoritmo de Optimización</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='3592834-general-hierachy-map-office-site-structure_107753.ico') }}" type="image/x-icon">
 </head>
 <body>
 
 <div class="layout">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-  <div class="nav-container">
-        
+<aside class="sidebar">
+    <div class="nav-container">
         <div class="nav-group">
-        <button class="nav-category-btn" onclick="mostrar('metricas')">Métricas</button>
-        <div class="nav-items-wrapper">
-                <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Mejor Fitness</button>
-                <button class="nav-item" onclick="mostrar('sec-tiempo', 'Métrica: Tiempo')">Tiempo de Ejecución</button>
-                <button class="nav-item" onclick="mostrar('sec-tiempo', 'Métrica: Tiempo')">Tiempo de Ejecución</button>
+            <button class="nav-category-btn" onclick="location.href='#vista-general'">Métricas</button>
+            <div class="nav-items-wrapper">
+                <span class="nav-item">Mejor Fitness</span>
+                <span class="nav-item">Tiempo de ejecución</span>
+                <span class="nav-item">Desviación estándar</span>
+                <span class="nav-item">Convergencia</span>
             </div>
         </div>
+
         <div class="nav-group">
-        <button class="nav-category-btn"onclick="mostrar('convergencia')">Convergencia</button>
-         <div class="nav-items-wrapper">
-         <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Proceso de optimización</button>
-         </div>
+            <button class="nav-category-btn" onclick="location.href='#card-convergencia'">Análisis</button>
+            <div class="nav-items-wrapper">
+                <span class="nav-item">Proceso de Optimización</span>
+                <span class="nav-item">Mejora de Rendimiento</span>
+                <span class="nav-item">Baseline</span>
+                <span class="nav-item">Análisis de robustez</span>
+            </div>
         </div>
-        <div class="nav-group">  
-        <button class="nav-category-btn" onclick="mostrar('comparacion')">Comparación</button>
-                 <div class="nav-items-wrapper">
-         <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Mejora de rendimiento</button>
-         </div>
-        </div>
+
         <div class="nav-group">
-        <button class="nav-category-btn"onclick="mostrar('ruta')">Ruta</button>
-                 <div class="nav-items-wrapper">
-         <button class="nav-item" onclick="mostrar('sec-fitness', 'Métrica: Mejor Fitness')">Configuracion de ruta final</button>
-         </div>
+            <button class="nav-category-btn" onclick="location.href='#card-ruta'">Ruta Final</button>
+            <div class="nav-items-wrapper">
+                <span class="nav-item">Configuración de Mapa</span>
+            </div>
         </div>
-    </aside>
+    </div>
+</aside>
+
 <div class="main-wrapper">
-   <div class="header">
-        <h1>Algoritmo Híbrido GA + SA</h1>
+<div class="header">
+        <h1>Algoritmo Híbrido GA (población) + SA (Simmulated Annealing)</h1>
         </div>
 
     <!-- CONTENIDO -->
     <main class="contenido">
         <!-- METRICAS -->
 <section id="vista-general" class="seccion activa">
-    
     <div class="graficas-container">
-        <div class="chart-card">
+        <div class="chart-card kpi-card">
             <span class="etiquetas">Mejor Fitness</span>
             <h3 id="fitnessValor">0.00</h3>
-            <canvas id="fitnessChart"></canvas>
+            <p class="unidad">Puntos</p>
         </div>
 
-        <div class="chart-card">
+        <div class="chart-card kpi-card">
             <span class="etiquetas">Tiempo de Ejecución</span>
             <h3 id="tiempoValor">0.00</h3>
-            <canvas id="tiempoChart"></canvas>
+            <p class="unidad">Segundos</p>
         </div>
 
-        <div class="chart-card">
-            <span class="etiquetas">Desviación Estándar</span>
-            <h3 id="desviacionValor">0.00</h3>
-            <canvas id="desviacionChart"></canvas>
+<div class="chart-card kpi-card">
+    <span class="etiquetas">Desviación Estándar</span>
+    <h3 id="stdValor">0</h3>
+    <p class="unidad">Estabilidad</p>
+</div>
+
+        <div class="chart-card kpi-card">
+            <span class="etiquetas">Convergencia</span>
+            <h3 id="convValor">0</h3>
+            <p class="unidad">Generación</p>
         </div>
     </div>
 </section>
@@ -76,7 +81,7 @@
         </section>
 
 
-      <div class="analisis-grid">
+    <div class="analisis-grid">
                 <div id="card-convergencia" class="analisis-card">
                     <p class="etiquetas">Proceso de Optimización</p>
                     <img src="{{ url_for('static', filename='graficas/convergencia.png') }}" class="img-fluid">
@@ -85,9 +90,20 @@
                     <p class="etiquetas">Mejora de Rendimiento</p>
                     <img src="{{ url_for('static', filename='graficas/comparacion.png') }}" class="img-fluid">
                 </div>
-                <div id="card-ruta" class="analisis-card">
-                    <p class="etiquetas">Configuración de Ruta Final</p>
-                    <img src="{{ url_for('static', filename='graficas/ruta.png') }}" class="img-fluid">
+                    <div id="card-baseline" class="analisis-card">
+                    <p class="etiquetas">Baseline</p>
+                    <img src="{{ url_for('static', filename='graficas/baseline.png') }}" class="img-fluid">
+                </div>
+                    <div id="card-baseline" class="analisis-card">
+                    <p class="etiquetas">Robustez</p>
+                    <img src="{{ url_for('static', filename='graficas/robustez.png') }}" class="img-fluid">
+                </div>
+                <div id="card-ruta" class="analisis-card" >
+                <p class="etiquetas">Mapa de Ruta Final</p>
+          <div style="width: 100%; height: 100vh; overflow: hidden; display: flex; justify-content: center;">
+    <img src="static/graficas/mapa_ruta.png" 
+         style="max-width: 100%; max-height: 100%; object-fit: contain;  ">
+</div>
                 </div>
             </div>
         </section>
@@ -98,10 +114,13 @@
 <script>
 
 
+
 window.resultados = {
     fitness: Number("{{ resultados.fitness }}"),
     tiempo: Number("{{ resultados.tiempo }}"),
-    desviacion: Number("{{ resultados.desviacion }}")
+    robustez: Number("{{ resultados.robustez }}"),
+    generacion_estable: Number("{{ resultados.generacion_estable }}"),
+    mejora_porcentaje: Number("{{ resultados.mejora_porcentaje }}")
 };
 </script>
 

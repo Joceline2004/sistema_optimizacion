@@ -10,9 +10,6 @@ function mostrar(id){
 }
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ==============================
-    // PLUGIN: TEXTO EN EL CENTRO
-    // ==============================
     const centerTextPlugin = {
 
         id: 'centerText',
@@ -45,86 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    // ==============================
-    // FUNCION PARA CREAR GRAFICAS
-    // ==============================
-    function crearGrafica(id, valor, color, maximo = null) {
+    document.getElementById("fitnessValor").innerText = 
+        window.resultados.fitness.toFixed(2);
 
-        // Evitar errores de escala
-        if (!maximo) {
-            maximo = valor * 1.5;
-        }
+    document.getElementById("tiempoValor").innerText = 
+        window.resultados.tiempo.toFixed(2) + " s";
 
-        new Chart(document.getElementById(id), {
+ document.getElementById("stdValor").innerText =
+    "± " + window.resultados.robustez.toFixed(2);
 
-            type: 'doughnut',
+document.getElementById("convValor").innerText =
+    "Gen " + window.resultados.generacion_estable;
 
-            data: {
-
-                labels: ['Valor', 'Restante'],
-
-                datasets: [{
-                    data: [valor, Math.max(maximo - valor, 0)],
-                    backgroundColor: [color, '#e0e0e0'],
-                    borderWidth: 0
-                }]
-            },
-
-            options: {
-
-                responsive: true,
-
-                cutout: '70%',
-
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            },
-
-            plugins: [centerTextPlugin]
-        });
-    }
-
-
-    // ==============================
-    // CREAR GRAFICAS
-    // ==============================
-
-    crearGrafica(
-        'fitnessChart',
-        Number(resultados.fitness),
-        '#6a0dad',
-        1000
-    );
-
-    crearGrafica(
-        'tiempoChart',
-        Number(resultados.tiempo),
-        '#ff6600',
-        100
-    );
-
-    crearGrafica(
-        'desviacionChart',
-        Number(resultados.desviacion),
-        '#00b894',
-        100
-    );
-
-
-    // ==============================
-    // MOSTRAR VALORES EN TEXTO
-    // ==============================
-
-    document.getElementById('fitnessValor').innerText =
-        "Fitness: " + Number(resultados.fitness).toFixed(2);
-
-    document.getElementById('tiempoValor').innerText =
-        "Tiempo: " + Number(resultados.tiempo).toFixed(2) + " s";
-
-    document.getElementById('desviacionValor').innerText =
-        "Desviación: " + Number(resultados.desviacion).toFixed(2);
-
+document.getElementById("mejoraValor").innerText =
+    window.resultados.mejora_porcentaje.toFixed(2) + "%";
 });

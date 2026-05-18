@@ -1,4 +1,3 @@
-/* Importar fuentes modernas */
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Poppins:wght@300;400;600&display=swap');
 
 :root {
@@ -8,9 +7,14 @@
     --color-accent: #d66564;          
     --text-main: #ffffff;
     --text-muted: #b0b3c1;
-    --bg-card: rgba(255, 255, 255, 0.05); /* Más sutil para Power BI */
+    --bg-card: rgba(255, 255, 255, 0.011);
     --border-style: rgba(53, 81, 124, 0.5) 0.8px solid;
     --shadow-main: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
+    --transition-speed: 0.3s;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -25,20 +29,25 @@ body {
     overflow-x: hidden;
 }
 
-/* LAYOUT ESTRUCTURAL */
 .layout {
     display: flex;
     min-height: 100vh;
+    align-items: flex-start;
 }
 
 .sidebar {
     width: 240px;
     min-width: 240px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
     border-right: var(--border-style);
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(4, 0, 12, 0.4);
     backdrop-filter: blur(15px);
     padding: 20px 15px;
-    z-index: 10;
+    z-index: 100;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .main-wrapper {
@@ -50,7 +59,6 @@ body {
 .header {
     padding: 15px 30px;
     border-bottom: var(--border-style);
-    background: rgba(255, 255, 255, 0.02);
 }
 
 .header h1 {
@@ -61,7 +69,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* NAVEGACIÓN TIPO ÁRBOL */
 .nav-category-btn {
     width: 100%;
     background: transparent;
@@ -76,8 +83,15 @@ body {
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    transition: var(--transition-speed);
+    border-radius: 4px;
 }
 
+.nav-category-btn:hover { 
+    color: var(--text-main); 
+    padding-left: 15px; 
+    background-color: rgba(255, 255, 255, 0.05);
+}
 
 .nav-items-wrapper {
     position: relative;
@@ -87,6 +101,7 @@ body {
 }
 
 .nav-item {
+    text-decoration: none;
     display: block;
     width: 100%;
     background: transparent;
@@ -95,35 +110,37 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 0.85rem;
     text-align: left;
-    padding: 6px 0;
-    cursor: pointer;
-    transition: 0.2s;
+    padding: 8px 0;
+    cursor: default;
+    transition: var(--transition-speed);
 }
 
-.nav-item:hover { color: var(--text-main); padding-left: 5px; }
-
-/* REJILLA TIPO POWER BI */
 .contenido {
     padding: 25px;
-    background: rgba(0,0,0,0.1);
 }
-/* Fila de KPIs (Tarjetas pequeñas arriba) */
+
 .graficas-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    margin-bottom: 25px;
-    height:500px;
-
+    margin-bottom: 20px;
 }
 
 .chart-card {
     background: var(--bg-card);
     border: var(--border-style);
-    border-top: 3px solid var(--color-electric); /* Acento superior tipo PBI */
-    border-radius: 4px; /* Menos redondeado para verse corporativo */
+    border-top: 3px solid var(--color-electric);
+    border-radius: 4px;
     padding: 15px;
     text-align: left;
+    transition: var(--transition-speed) ease-in-out;
+}
+
+.chart-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-electric);
 }
 
 .chart-card .etiquetas {
@@ -139,34 +156,37 @@ body {
     color: var(--text-main);
 }
 
-/* Rejilla de Gráficos Grandes */
+.kpi-card {
+    text-align: center;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    min-width: 150px;
+}
+
+.kpi-card h3 {
+    font-size: 2.5rem;
+    color: #00f2fe;
+}
+
 .analisis-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas para gráficos principales */
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
-/* Forzar a que la tarjeta de ruta ocupe todo el ancho */
-#card-ruta {
-    grid-column: 1 / -1; 
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Ajuste opcional para que la imagen dentro se vea más grande */
-#card-ruta img {
-    max-height: 600px; /* Aumentamos el límite de altura para que luzca el ancho */
-    width: auto;
-    margin: 0 auto;
-    display: block;
-}
-
 
 .analisis-card {
     background: var(--bg-card);
     border: var(--border-style);
     border-radius: 4px;
     padding: 20px;
-   
+    scroll-margin-top: 80px;
+    transition: var(--transition-speed) ease-in-out;
+}
+
+.analisis-card:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--color-electric);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
 }
 
 .analisis-card .etiquetas {
@@ -176,20 +196,27 @@ body {
     padding-bottom: 5px;
 }
 
-/* IMÁGENES AJUSTADAS */
+#card-ruta {
+    grid-column: 1 / -1; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#card-ruta img {
+    max-height: 600px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
 img {
     width: 100%;
     height: auto;
     max-height: 350px;
     object-fit: contain;
-    border-radius: 0;
     background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
 }
 
-/* MODO PANTALLA COMPLETA MEJORADO */
 .is-fullscreen {
     position: fixed !important;
     top: 0; left: 0;
@@ -210,11 +237,14 @@ img {
     max-width: 90%;
 }
 
-.dimmed { opacity: 0; visibility: hidden; } /* Power BI oculta el resto al enfocar */
+.dimmed { opacity: 0; visibility: hidden; }
 
-/* Animación */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-.seccion.activa { display: block; animation: fadeIn 0.3s ease-in; }
+
+.seccion.activa { 
+    display: block; 
+    animation: fadeIn 0.3s ease-in; 
+}
